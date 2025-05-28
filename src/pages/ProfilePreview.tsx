@@ -1,4 +1,12 @@
-function ProfilePreview({ name, email, bio, imageURL }) {
+type ProfilePreviewProps = {
+  name: string;
+  email: string;
+  bio: string;
+  colour: string;
+  imageURL?: string; // optional
+};
+
+function ProfilePreview({ name, email, bio, imageURL }: ProfilePreviewProps) {
   return (
     <div>
       <h2>Name: {name}</h2>
