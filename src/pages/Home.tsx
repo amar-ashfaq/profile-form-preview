@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ProfilePreview from "./ProfilePreview";
 
-type ProfileProps = {
+type Profile = {
   name: string;
   email: string;
   bio: string;
@@ -10,7 +10,7 @@ type ProfileProps = {
 };
 
 function Home() {
-  const [profile, setProfile] = useState<ProfileProps>({
+  const [profile, setProfile] = useState<Profile>({
     name: "",
     email: "",
     bio: "",
@@ -25,7 +25,7 @@ function Home() {
       name: localStorage.getItem("profileName") || "",
       email: localStorage.getItem("profileEmail") || "",
       bio: localStorage.getItem("profileBio") || "",
-      colour: localStorage.getItem("profileColour") || "",
+      colour: localStorage.getItem("profileColour") || "#ffffff",
       imageURL: localStorage.getItem("profileImageURL") || "",
     });
   }, []);
@@ -54,7 +54,7 @@ function Home() {
   };
 
   const storeProfileToLocalStorage =
-    (key: keyof ProfileProps) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    (key: keyof Profile) => (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
       localStorage.setItem(`profile${capitaliseFirstLetter(key)}`, value);
       setProfile((previousState) => ({ ...previousState, [key]: value }));
