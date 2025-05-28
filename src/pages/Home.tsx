@@ -1,21 +1,33 @@
 import { useEffect, useState } from "react";
 import ProfilePreview from "./ProfilePreview";
 
+type ProfileProps = {
+  name: string;
+  email: string;
+  bio: string;
+  colour: string;
+  imageURL?: string;
+};
+
 function Home() {
-  const [name, setName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [bio, setBio] = useState<string>("");
-  const [colour, setColour] = useState<string>("#ffffff");
-  const [imageURL, setImageURL] = useState<string>("");
+  const [profile, setProfile] = useState<ProfileProps>({
+    name: "",
+    email: "",
+    bio: "",
+    colour: "#ffffff",
+    imageURL: "",
+  });
 
   const [showClearMessage, setShowClearMessage] = useState<boolean>(false);
 
   useEffect(() => {
-    setName(localStorage.getItem("profileName") || "");
-    setEmail(localStorage.getItem("profileEmail") || "");
-    setBio(localStorage.getItem("profileBio") || "");
-    setColour(localStorage.getItem("profileColour") || "#ffffff");
-    setImageURL(localStorage.getItem("profileImageURL") || "");
+    setProfile({
+      name: localStorage.getItem("profileName") || "",
+      email: localStorage.getItem("profileEmail") || "",
+      bio: localStorage.getItem("profileBio") || "",
+      colour: localStorage.getItem("profileColour") || "",
+      imageURL: localStorage.getItem("profileImageURL") || "",
+    });
   }, []);
 
   const clearFields = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -25,11 +37,13 @@ function Home() {
     // clear the localStorage
     localStorage.clear();
 
-    setName("");
-    setEmail("");
-    setBio("");
-    setColour("#ffffff");
-    setImageURL("");
+    setProfile({
+      name: "",
+      email: "",
+      bio: "",
+      colour: "#ffffff",
+      imageURL: "",
+    });
 
     setShowClearMessage(true);
 
@@ -39,13 +53,16 @@ function Home() {
     }, 3000);
   };
 
-  const storeInputToLocalStorage =
-    (key: string, setter: React.Dispatch<React.SetStateAction<string>>) =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+  const storeProfileToLocalStorage =
+    (key: keyof ProfileProps) => (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
-      setter(value);
-      localStorage.setItem(key, value);
+      localStorage.setItem(`profile${capitaliseFirstLetter(key)}`, value);
+      setProfile((previousState) => ({ ...previousState, [key]: value }));
     };
+
+  const capitaliseFirstLetter = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
 
   return (
     <div>
@@ -55,8 +72,8 @@ function Home() {
             Name:
             <input
               type="text"
-              value={name}
-              onChange={storeInputToLocalStorage("profileName", setName)}
+              value={profile.name}
+              onChange={storeProfileToLocalStorage("name")}
             />
           </label>
         </p>
@@ -65,8 +82,8 @@ function Home() {
             Email:
             <input
               type="email"
-              value={email}
-              onChange={storeInputToLocalStorage("profileEmail", setEmail)}
+              value={profile.email}
+              onChange={storeProfileToLocalStorage("email")}
             />
           </label>
         </p>
@@ -75,8 +92,8 @@ function Home() {
             Bio:
             <input
               type="text"
-              value={bio}
-              onChange={storeInputToLocalStorage("profileBio", setBio)}
+              value={profile.bio}
+              onChange={storeProfileToLocalStorage("bio")}
             />
           </label>
         </p>
@@ -85,8 +102,8 @@ function Home() {
             Colour:
             <input
               type="color"
-              value={colour}
-              onChange={storeInputToLocalStorage("profileColour", setColour)}
+              value={profile.colour}
+              onChange={storeProfileToLocalStorage("colour")}
             />
           </label>
         </p>
@@ -95,11 +112,8 @@ function Home() {
             Image URL:
             <input
               type="text"
-              value={imageURL}
-              onChange={storeInputToLocalStorage(
-                "profileImageURL",
-                setImageURL
-              )}
+              value={profile.imageURL}
+              onChange={storeProfileToLocalStorage("imageURL")}
             />
           </label>
         </p>
@@ -107,11 +121,11 @@ function Home() {
           Clear
         </button>
         <ProfilePreview
-          name={name}
-          email={email}
-          bio={bio}
-          colour={colour}
-          imageURL={imageURL}
+          name={profile.name}
+          email={profile.email}
+          bio={profile.bio}
+          colour={profile.colour}
+          imageURL={profile.imageURL}
         />
       </form>
       {showClearMessage && (
