@@ -8,7 +8,7 @@ type ProfilePreviewProps = {
 
 function ProfilePreview({ name, email, bio, imageURL }: ProfilePreviewProps) {
   return (
-    <div className="mt-8 p-4 border rounded-lg shadow-md bg-white space-y-4">
+    <div className="mt-8 md:mt-0 p-4 border rounded-lg shadow-md bg-gray-50 space-y-4">
       <h2 className="text-xl font-semibold">Preview</h2>
       <p className="text-sm text-gray-700 mb-1">
         <span className="font-medium">Name:</span> {name}
@@ -23,7 +23,7 @@ function ProfilePreview({ name, email, bio, imageURL }: ProfilePreviewProps) {
         <img
           src={imageURL}
           alt="Profile"
-          className="w-32 h-32 object-cover border border-gray-300"
+          className="w-48 h-48 object-cover border border-gray-300"
         />
       )}
     </div>
