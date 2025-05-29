@@ -65,74 +65,101 @@ function Home() {
   };
 
   return (
-    <div>
-      <form>
-        <p>
-          <label>
-            Name:
-            <input
-              type="text"
-              value={profile.name}
-              onChange={storeProfileToLocalStorage("name")}
-            />
-          </label>
-        </p>
-        <p>
-          <label>
-            Email:
-            <input
-              type="email"
-              value={profile.email}
-              onChange={storeProfileToLocalStorage("email")}
-            />
-          </label>
-        </p>
-        <p>
-          <label>
-            Bio:
-            <input
-              type="text"
-              value={profile.bio}
-              onChange={storeProfileToLocalStorage("bio")}
-            />
-          </label>
-        </p>
-        <p>
-          <label>
-            Colour:
-            <input
-              type="color"
-              value={profile.colour}
-              onChange={storeProfileToLocalStorage("colour")}
-            />
-          </label>
-        </p>
-        <p>
-          <label>
-            Image URL:
-            <input
-              type="text"
-              value={profile.imageURL}
-              onChange={storeProfileToLocalStorage("imageURL")}
-            />
-          </label>
-        </p>
-        <button type="button" onClick={clearFields}>
-          Clear
-        </button>
-        <ProfilePreview
-          name={profile.name}
-          email={profile.email}
-          bio={profile.bio}
-          colour={profile.colour}
-          imageURL={profile.imageURL}
-        />
-      </form>
-      {showClearMessage && (
-        <p style={{ color: "green", fontWeight: "bold" }}>
-          Form cleared successfully!
-        </p>
-      )}
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-md space-y-8 bg-white p-8 rounded-lg shadow">
+        <h2 className="text-center text-2xl font-bold text-gray-900">
+          Profile Form
+        </h2>
+        <form className="space-y-6">
+          {/* Name */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Name:
+              <input
+                type="text"
+                value={profile.name}
+                onChange={storeProfileToLocalStorage("name")}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              />
+            </label>
+          </div>
+
+          {/* Email */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Email:
+              <input
+                type="email"
+                value={profile.email}
+                onChange={storeProfileToLocalStorage("email")}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              />
+            </label>
+          </div>
+
+          {/* Bio */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Bio:
+              <input
+                type="text"
+                value={profile.bio}
+                onChange={storeProfileToLocalStorage("bio")}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              />
+            </label>
+          </div>
+
+          {/* Colour */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Colour:
+              <input
+                type="color"
+                value={profile.colour}
+                onChange={storeProfileToLocalStorage("colour")}
+                className="w-full h-10 p-1 border border-gray-300 rounded-md"
+              />
+            </label>
+          </div>
+
+          {/* Image URL */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Image URL:
+              <input
+                type="text"
+                value={profile.imageURL}
+                onChange={storeProfileToLocalStorage("imageURL")}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              />
+            </label>
+          </div>
+
+          <button
+            type="button"
+            onClick={clearFields}
+            className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md transition duration-200"
+          >
+            Clear
+          </button>
+
+          <ProfilePreview
+            name={profile.name}
+            email={profile.email}
+            bio={profile.bio}
+            colour={profile.colour}
+            imageURL={profile.imageURL}
+          />
+        </form>
+
+        {/* Clear message */}
+        {showClearMessage && (
+          <p className="text-green-600 font-semibold text-sm">
+            Form cleared successfully!
+          </p>
+        )}
+      </div>
     </div>
   );
 }
